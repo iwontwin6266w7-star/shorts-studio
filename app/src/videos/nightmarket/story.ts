@@ -153,7 +153,7 @@ const S4a = (f: number) => dolly([0.9, 1.5, -21.8], [BUTCHER[0], 1.35, BUTCHER[2
 const S4b = (f: number) => dolly([0.35, 1.5, -22.6], [0, 1.4, BUTCHER[2] - 0.1], pushK(f, 344, 0.0015, 0.006, 26), { fov: 34, roll: -0.05 });
 // shot 5: bedroom rule insert (both beds + the door) -> the sleeper on "hurt", punch through "jolt awake"
 const S5a = (f: number) => dolly([BED[0], 1.25, 2.9], [BED[0], 0.9, -1.2], pushK(f, 387, 0.0018), { fov: 42 });
-const S5b = (f: number) => dolly([30.1, 1.35, 2.5], [28.8, 0.9, -0.1], pushK(f, 434, 0.0018, 0.006, 28), { fov: 36 });
+const S5b = (f: number) => dolly([30.3, 1.6, 3.3], [28.8, 1.45, -0.1], pushK(f, 434, 0.0018, 0.006, 28), { fov: 36 });
 // shot 6: deep alley perspective (stalls both sides) -> the upside-down flower shop, off-kilter roll
 const S6a = (f: number) => dolly([0.6, 1.65, -31], [0, 1.45, -52], pushK(f, 486, 0.0018), { fov: 44 });
 const S6b = (f: number) => dolly([-4.3, 1.8, -36.3], [FLOWER[0], 2.3, FLOWER[2]], pushK(f, 554, 0.0015, 0.005, 25), { fov: 40, roll: 0.06 });
@@ -162,7 +162,7 @@ const S6b = (f: number) => dolly([-4.3, 1.8, -36.3], [FLOWER[0], 2.3, FLOWER[2]]
 const S7a = (f: number) => dolly([0.1, 0.5, -46.3], [COLL_ALLEY[0], 1.7, COLL_ALLEY[2]], pushK(f, 585, 0.0025), { fov: 42 });
 const S7b = (f: number) => dolly([0.55, 1.55, -47.7], [1.1, 1.35, -49.6], pushK(f, 604, 0.002), { fov: 34 });
 const S7b2 = (f: number) => dolly([0.5, 1.5, -48.1], [1.05, 1.3, -49.7], pushK(f, 640, 0.002, 0.006, 26), { fov: 33 });
-const S7c = (f: number) => dolly([-0.5, 1.65, -47.1], [COLL_ALLEY[0] - 0.1, 1.8, COLL_ALLEY[2]], pushK(f, 661, 0.002), { fov: 36, roll: 0.05 });
+const S7c = (f: number) => dolly([-0.5, 1.9, -47.1], [1.1, 2.6, -50], pushK(f, 661, 0.002), { fov: 36, roll: 0.05 });
 // shot 8: overhead-ish of the sleeper (breathing forever creep) -> the beds-row drift ("Seven people", cut) ->
 // back to the brother on "my sister", punch on "eight."
 const S8a = (f: number) => dolly([27.3, 2.4, -1.9], [28.75, 1.0, 0.0], pushK(f, 698, 0.0015), { fov: 40 });
@@ -189,25 +189,25 @@ const S11c = (f: number) => dolly([-0.6, 1.6, -42.0], [2.4, 2.05, -52], pushK(f,
 // shot 12 (roof dead end): arrival wide -> over the edge into pitch black ("thousand", cut; punch on "black.") ->
 // the two-shot at the ledge ("we're trapped", cut) -> closer on the hand hold ("no, we're not")
 const S12a = (f: number) => dolly([2.6, 11.2, -33.8], [0, 10.45, -39.5], pushK(f, 1264, 0.0018), { fov: 44 });
-const S12b = (f: number) => dolly([0, 10.5, -40.8], [0, 7.6, -47.5], pushK(f, 1314, 0.0015, 0.005, 30), { fov: 46, roll: -0.06 });
+const S12b = (f: number) => dolly([0, 11.5, -46.5], [0, 3.5, -51], pushK(f, 1314, 0.0015, 0.005, 30), { fov: 46, roll: -0.06 });
 const S12c = (f: number) => dolly([-2.4, 11.1, -41.6], [0, 10.6, -38.7], pushK(f, 1410, 0.0018), { fov: 40 });
 const S12d = (f: number) => dolly([-1.9, 11.0, -41.0], [0, 10.6, -38.7], pushK(f, 1454, 0.002, 0.006, 20), { fov: 36, roll: 0.05 });
 // shot 13: the leap off the ledge -> top-down vertigo ("Falling.", cut) into the JOLT (kick at 1504)
-const S13a = (f: number) => dolly([-1.3, 11.3, -41.0], [0, 10.35, -38.2], pushK(f, 1471, 0.002), { fov: 44 });
-const S13b = (f: number) => dolly([0.15, 13.8, -36.8], [0, 3.5, -38.2], pushK(f, 1491, 0.004), { fov: 50, roll: 0.08 });
+const S13a = (f: number) => dolly([-1.3, 11.3, -41.0], [-0.2, 10.35, -38.2], pushK(f, 1471, 0.002), { fov: 46 });
+const S13b = (f: number) => dolly([0, 13.5, -45.0], [0, 2.0, -47.5], pushK(f, 1491, 0.004), { fov: 50, roll: 0.08 });
 // shot 14: sat up gasping -> the door across the hall bursts open (punch on "burst")
-const S14a = (f: number) => dolly([30.0, 1.6, 2.3], [28.8, 1.05, -0.1], pushK(f, 1513, 0.002), { fov: 36 });
-const S14b = (f: number) => dolly([30.05, 1.5, 0.2], [30, 1.2, -2.2], pushK(f, 1579, 0.002, 0.006, 20), { fov: 40, roll: -0.04 });
+const S14a = (f: number) => dolly([30.1, 1.7, 2.9], [28.8, 1.5, -0.1], pushK(f, 1513, 0.002), { fov: 36 });
+const S14b = (f: number) => dolly([30.1, 1.35, 1.4], [30, 1.1, -2.2], pushK(f, 1579, 0.002, 0.006, 20), { fov: 40, roll: -0.04 });
 // shot 15: the trick (jumpers off the roofs) -> "you jump off the nearest roof" (cut) -> the empty market from the
 // entrance (high wide zoom) -> down the long street to the figure at the end ("except for him.", punch)
 const S15a = (f: number) => dolly([2.7, 11.45, -34.8], [0.2, ROOF_Y + 0.75, LEDGE[2] + 3], pushK(f, 1618, 0.0015), { fov: 44 });
 const S15b = (f: number) => dolly([-1.6, 11.05, -37.8], [1.2, ROOF_Y + 0.7, LEDGE[2] + 3], pushK(f, 1687, 0.0018), { fov: 42 });
-const S15c = (f: number) => zoom([5.2, 6.5, 0.5], [0, 1.2, -26], 44, pushK(f, 1716, 0.0015));
+const S15c = (f: number) => zoom([3.6, 7.2, 2.5], [0, 0.9, -30], 44, pushK(f, 1716, 0.0015));
 const S15d = (f: number) => dolly([0.5, 1.45, -15.5], [0.8, 1.7, -56], pushK(f, 1792, 0.0015, 0.005, 20), { fov: 38 });
 // shot 16: him at the entrance MS -> "looked right at me" CU (punch on "me.") -> whisper CU -> side track as he
 // walks to the entrance ledge -> the step off into the dark (4.5 deg roll layered)
 const S16a = (f: number) => dolly([-2.5, 1.55, -4.6], [COLL_ENTR[0], 2.05, COLL_ENTR[2]], pushK(f, 1814, 0.002), { fov: 40 });
-const S16b = (f: number) => dolly([-1.05, 2.7, -6.9], [0, 3.2, -9.3], pushK(f, 1854, 0.0015, 0.006, 24), { fov: 34, roll: 0.04 });
+const S16b = (f: number) => dolly([-1.2, 2.75, -6.5], [0, 3.45, -9.3], pushK(f, 1854, 0.0015, 0.006, 24), { fov: 34, roll: 0.04 });
 const S16c = (f: number) => dolly([-0.85, 2.75, -7.3], [0, 3.25, -9.4], pushK(f, 1876, 0.002), { fov: 32 });
 const S16d = (f: number) => dolly([0.9, 1.7, -11.8], [0, 2.0, -6.5], pushK(f, 1917, 0.0018), { fov: 42 });
 const S16e = (f: number) => dolly([-2.5, 1.15, -2.9], [LEDGE_M[0], 0.9, LEDGE_M[2]], pushK(f, 1941, 0.002), { fov: 40 });
@@ -360,7 +360,7 @@ export const DOF: Dof[] = [
   { f: 305, cInf: 11, focus: () => [BUTCHER[0], 1.35, BUTCHER[2]] }, // butcher MS
   { f: 344, cInf: 13, focus: () => [0, 1.4, BUTCHER[2] - 0.1] }, // deadpan CU
   { f: 387, cInf: 12, focus: () => [BED[0], 0.9, -1.2] }, // rule insert
-  { f: 434, cInf: 12, focus: () => [28.8, 0.9, -0.1] },
+  { f: 434, cInf: 12, focus: () => [28.8, 1.45, -0.1] },
   { f: 486, cInf: 0 }, // alley deep wide
   { f: 554, cInf: 10, focus: () => [FLOWER[0], 2.3, FLOWER[2]] },
   { f: 585, cInf: 12, focus: () => [1.05, 2.0, -51] }, // the collector's eyes (8 ft)
@@ -386,15 +386,15 @@ export const DOF: Dof[] = [
   { f: 1410, cInf: 10, focus: () => [0, 10.6, -38.7] },
   { f: 1454, dur: 14, cInf: 12, focus: () => [0, 10.6, -38.7] },
   { f: 1471, cInf: 0 }, // the jump, falling
-  { f: 1513, cInf: 12, focus: () => [28.8, 1.05, -0.1] }, // sat up gasping
-  { f: 1579, cInf: 12, focus: () => [30, 1.2, -2.2] },
+  { f: 1513, cInf: 12, focus: () => [28.8, 1.5, -0.1] }, // sat up gasping
+  { f: 1579, cInf: 12, focus: () => [30, 1.1, -2.2] },
   { f: 1618, cInf: 0 }, // the trick (roof wides)
   { f: 1716, cInf: 0 }, // the empty market
   { f: 1814, cInf: 10, focus: () => [COLL_ENTR[0], 2.05, COLL_ENTR[2]] },
-  { f: 1854, cInf: 13, focus: () => [0, 3.2, -9.3] },
+  { f: 1854, cInf: 13, focus: () => [0, 3.45, -9.3] },
   { f: 1876, dur: 12, cInf: 14, focus: () => [0, 3.25, -9.4] },
   { f: 1917, cInf: 0 }, // the walk to the ledge
-  { f: 1958, cInf: 12, focus: () => [BED_B[0], 1.12, -0.1] },
+  { f: 1958, cInf: 12, focus: () => [28.8, 2.0, 0] }, // bolt upright
   { f: 1976, dur: 20, cInf: 14, focus: () => WATCH },
   { f: 1996, dur: 30, cInf: 16, focus: () => WATCH }, // final insert: softest
 ];

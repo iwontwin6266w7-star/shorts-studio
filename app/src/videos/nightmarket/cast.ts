@@ -486,11 +486,12 @@ const entrance = (t: number, cam: Info, out: Stage) => {
   collector(cam, t, out, 0, y, z);
 };
 
-/** S17 f1978-2036: a pocket watch sits at the foot of my bed */
-const watch = (t: number, out: Stage) => {
+/** S17 f1958-2036: bolt upright (jolt 2), then the pocket-watch insert at the foot of the bed */
+const watch = (t: number, cam: Info, out: Stage) => {
   const f = Math.round(t * FPS);
-  if (f < F.watch) return;
   bed(out, BRO_BED[0], BRO_BED[2], "bedB", { lump: 0, blanket: BROTHER.blanket });
+  sitUp(cam, t, out, BRO_BED[0], BRO_BED[2], "gasp", 1.5);
+  if (f < F.watch) return;
   out.fx.push({ key: "pwatch", cw: 900, ch: 1500, draw: (p) => fxPocketWatch(p), x: 28.78, y: 0.30, z: 0.50, w: 0.45, h: 0.75, soft: true });
 };
 
@@ -520,7 +521,7 @@ export const stage = (id: number, t: number, _b: unknown, cam: CamInfo): Stage =
     case 14: bedroom14(t, cam, out); break;
     case 15: trick(t, cam, out); alone(t, cam, out); break;
     case 16: entrance(t, cam, out); break;
-    case 17: watch(t, out); break;
+    case 17: watch(t, cam, out); break;
   }
   return out;
 };
