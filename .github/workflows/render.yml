@@ -27,7 +27,9 @@ jobs:
         working-directory: app
 
       - name: Render video
-        run: npx remotion render NightMarketShort out/nightmarket.mp4 --gl=swangle --log=error
+        run: |
+          mkdir -p out
+          npx remotion render NightMarketShort out/nightmarket.mp4 --gl=swangle --timeout=600000 --concurrency=2 --chrome-flag="--no-sandbox" --log=error
         working-directory: app
 
       - name: Upload artifact
