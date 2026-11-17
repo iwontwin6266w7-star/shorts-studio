@@ -428,10 +428,12 @@ const fallingShot = (t: number, cam: Info, out: Stage) => {
   if (f < F.falling[0]) y = 9.8 + 0.45 * Math.sin((Math.min(1, (f - F.jump[0]) / 18)) * Math.PI); // the leap
   else y = 9.8 - 8.5 * ((f - F.falling[0]) / (F.falling[1] - F.falling[0])) ** 2;
   if (y < -2) return;
+  // they leap off the LEDGE (z -44) and fall forward into the black past it
+  const z = -44 - Math.min(1.6, Math.max(0, f - F.jump[0]) * 0.047);
   const fb: FrontOpts = { mode: "fall", expr: "gasp", blink: 0 };
-  out.places.push(person(cam, brother(51), -0.3, y, -38.2, { side: false, mirror: false }, fb, {}));
+  out.places.push(person(cam, brother(51), -0.3, y, z, { side: false, mirror: false }, fb, {}));
   const fs: FrontOpts = { mode: "fall", expr: "terrified", blink: 0 };
-  out.places.push(person(cam, sister(50), 0.42, y - 0.12, -38.2, { side: false, mirror: false }, fs, {}, SIS_SCALE));
+  out.places.push(person(cam, sister(50), 0.42, y - 0.12, z, { side: false, mirror: false }, fs, {}, SIS_SCALE));
 };
 
 /** S14 f1513-1617: brother sits up gasping; sister's door bursts open -> she stands in the hall, hopeful */

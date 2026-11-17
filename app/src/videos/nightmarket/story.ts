@@ -193,8 +193,8 @@ const S12b = (f: number) => dolly([0, 11.5, -46.5], [0, 3.5, -51], pushK(f, 1314
 const S12c = (f: number) => dolly([-2.4, 11.1, -41.6], [0, 10.6, -38.7], pushK(f, 1410, 0.0018), { fov: 40 });
 const S12d = (f: number) => dolly([-1.9, 11.0, -41.0], [0, 10.6, -38.7], pushK(f, 1454, 0.002, 0.006, 20), { fov: 36, roll: 0.05 });
 // shot 13: the leap off the ledge -> top-down vertigo ("Falling.", cut) into the JOLT (kick at 1504)
-const S13a = (f: number) => dolly([-1.3, 11.3, -41.0], [-0.2, 10.35, -38.2], pushK(f, 1471, 0.002), { fov: 46 });
-const S13b = (f: number) => dolly([0.5, 13.8, -43.5], [0, 5.0, -42.0], pushK(f, 1491, 0.004), { fov: 50, roll: 0.08 });
+const S13a = (f: number) => dolly([-1.6, 11.4, -40.5], [-0.1, 10.3, -43.8], pushK(f, 1471, 0.002), { fov: 46 });
+const S13b = (f: number) => dolly([0, 12.5, -47], [0, 4, -45], pushK(f, 1491, 0.004), { fov: 50, roll: 0.08 });
 // shot 14: sat up gasping -> the door across the hall bursts open (punch on "burst")
 const S14a = (f: number) => dolly([30.1, 1.7, 2.9], [28.8, 1.5, -0.1], pushK(f, 1513, 0.002), { fov: 36 });
 const S14b = (f: number) => dolly([30.1, 1.35, 1.4], [30, 1.1, -2.2], pushK(f, 1579, 0.002, 0.006, 20), { fov: 40, roll: -0.04 });
@@ -208,7 +208,7 @@ const S15d = (f: number) => dolly([0.5, 1.45, -15.5], [0.8, 1.7, -56], pushK(f, 
 // walks to the entrance ledge -> the step off into the dark (4.5 deg roll layered)
 const S16a = (f: number) => dolly([-2.5, 1.55, -4.6], [COLL_ENTR[0], 2.05, COLL_ENTR[2]], pushK(f, 1814, 0.002), { fov: 40 });
 const S16b = (f: number) => dolly([-1.2, 2.85, -6.3], [0, 3.8, -9.3], pushK(f, 1854, 0.0015, 0.006, 24), { fov: 34, roll: 0.04 });
-const S16c = (f: number) => dolly([-0.85, 2.75, -7.3], [0, 3.25, -9.4], pushK(f, 1876, 0.002), { fov: 32 });
+const S16c = (f: number) => dolly([-0.85, 2.9, -7.3], [0, 3.6, -9.4], pushK(f, 1876, 0.002), { fov: 32 });
 const S16d = (f: number) => dolly([0.9, 1.7, -11.8], [0, 2.0, -6.5], pushK(f, 1917, 0.0018), { fov: 42 });
 const S16e = (f: number) => dolly([-2.5, 1.15, -2.9], [LEDGE_M[0], 0.9, LEDGE_M[2]], pushK(f, 1941, 0.002), { fov: 40 });
 // shot 17: bolt upright (JOLT 2, kick at 1958) -> tilt down to the foot of the bed -> the pocket watch CU,
@@ -392,7 +392,7 @@ export const DOF: Dof[] = [
   { f: 1716, cInf: 0 }, // the empty market
   { f: 1814, cInf: 10, focus: () => [COLL_ENTR[0], 2.05, COLL_ENTR[2]] },
   { f: 1854, cInf: 13, focus: () => [0, 3.8, -9.3] },
-  { f: 1876, dur: 12, cInf: 14, focus: () => [0, 3.25, -9.4] },
+  { f: 1876, dur: 12, cInf: 14, focus: () => [0, 3.6, -9.4] },
   { f: 1917, cInf: 0 }, // the walk to the ledge
   { f: 1958, cInf: 12, focus: () => [28.8, 2.15, 0] }, // bolt upright
   { f: 1976, dur: 20, cInf: 14, focus: () => WATCH },
