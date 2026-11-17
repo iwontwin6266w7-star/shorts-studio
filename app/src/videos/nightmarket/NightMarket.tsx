@@ -61,21 +61,23 @@ const Inner: React.FC<{ id: number; kit: Kit }> = ({ id, kit }) => {
     grade: new GradeEffect(GRADES.day, GRADE_STRENGTH.day), // initial preset; gradeFor() re-fits per shot below
     grain: new GrainEffect({ amount: 0.025, cellPx: 1.5 }), // film grain, OFF by default (inputProps post.grain): the reference measures no grain and it quadruples the file size
   }), [camera, scene]);
-  useEffect(() => () => fx.ink.dispose(), [fx]);
-  const effects = [
-    on.ink ? fx.ink : null,
-    on.lens && on.pre ? fx.lens.pre : null,
-    on.lens ? fx.lens.main : null,
-    on.bloom ? fx.bloom : null,
-    fx.tone,
-    on.grade ? fx.grade : null,
-    on.grain ? fx.grain : null,
-  ].filter((e): e is NonNullable<typeof e> => e !== null);
-  const post = useMemo(() => (
-    <EffectComposer multisampling={4}>
-      {effects.map((e, i) => <primitive key={i} object={e} dispose={null} />)}
-    </EffectComposer>
-  ), [fx, effects]);
+  useEffect(() => () => fx.ink?.dispose?.(), [fx]); // ?. : newer postprocessing drops Pass.dispose()
+  const post = useMemo(() => {
+    const effects = [
+      on.ink ? fx.ink : null,
+      on.lens && on.pre ? fx.lens.pre : null,
+      on.lens ? fx.lens.main : null,
+      on.bloom ? fx.bloom : null,
+      fx.tone,
+      on.grade ? fx.grade : null,
+      on.grain ? fx.grain : null,
+    ].filter((e): e is NonNullable<typeof e> => e !== null);
+    return (
+      <EffectComposer multisampling={4}>
+        {effects.map((e, i) => <primitive key={i} object={e} dispose={null} />)}
+      </EffectComposer>
+    );
+  }, [fx, on]); // stable: pass objects are created once; rebuilding per frame would re-create EffectPasses
   const cam = camera as THREE.PerspectiveCamera;
   target.copy(world.update(id, f, cam, scene));
   noInkFallback(world.root);
