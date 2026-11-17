@@ -5,6 +5,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: render-main
+  cancel-in-progress: true
+
 jobs:
   render:
     runs-on: ubuntu-latest
