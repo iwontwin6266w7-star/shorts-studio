@@ -32,6 +32,7 @@ jobs:
           node scripts/bridge-stills.mjs out/qa/ 240,300,450,630,690,750,840,1110,1230,1260,1290,1350,1410,1470,1500,1530,1590,1650,1710,1830,1890,1920,1970,2010 0.5
         env:
           CHROME_GL: swangle
+          BRIDGE_COMP: NightMarketShort
         working-directory: app
 
       - name: Upload QA stills
