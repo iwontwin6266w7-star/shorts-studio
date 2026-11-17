@@ -125,6 +125,8 @@ export const CAGE: V3 = [1.5, 0, -58];
 const BRO_BED: V3 = [BED[0] - 1.25, 0, BED[2]]; // brother's bed 2.5 m from the sister's, per the contract
 const SIS_BED: V3 = [BED[0] + 1.25, 0, BED[2]];
 const DOOR: V3 = [BED[0], 0, BED[2] - 2.2];     // the hall door (sister's door bursts open at f1545)
+const LEVIT: V3 = [-2, 0, 0];                   // the levitating man over the canal water (S3)
+const BUTCHER_PIN: V3 = [0, 0, -24.5];          // the butcher's deadpan MS spot (S4)
 
 // ---------------- outfits ----------------
 // SOCKS ONLY on every townsfolk foot (story beat): the "boots" field carries the sock colour.
@@ -321,15 +323,15 @@ const levitator = (t: number, cam: Info, out: Stage) => {
   const y = 3 + 0.06 * Math.sin(t * 0.9);
   const v = 2, who: Who = { i: 300, o: pajamas(v), okey: `pj${v}` };
   const fo: FrontOpts = { mode: "levitate", expr: "relief", blink: lidAt(t, 300) };
-  out.places.push(person(cam, who, 1.2, y, -24, { side: false, mirror: false }, fo, {}));
+  out.places.push(person(cam, who, LEVIT[0], y, LEVIT[2], { side: false, mirror: false }, fo, {}));
 };
 const vOf = (i: number) => (i * 7 + (i >> 2)) % 6;
 
 /** S4 f305-386: the butcher shows up in his bathroom nightly, does not care anymore: deadpan, cleaver, no reaction */
 const butcher = (t: number, cam: CamInfo, out: Stage) => {
   const fo: FrontOpts = { mode: "stand", expr: "deadpan", prop: "cleaver", blink: lidAt(t, 40), headTilt: 2 * Math.sin(t * 0.5) };
-  out.places.push(person(cam, { i: 40, o: BUTCHER, okey: "but" }, 1.1, 0, -28, { side: false, mirror: false }, fo, {}));
-  blob(out, 1.1, 0, -28, 1.05);
+  out.places.push(person(cam, { i: 40, o: BUTCHER, okey: "but" }, BUTCHER_PIN[0], 0, BUTCHER_PIN[2], { side: false, mirror: false }, fo, {}));
+  blob(out, BUTCHER_PIN[0], 0, BUTCHER_PIN[2], 1.05);
 };
 
 /** S5 f387-485: bedroom insert - a sleeper jolts up mid-rule */
@@ -346,11 +348,11 @@ const sitUp = (cam: Info, t: number, out: Stage, x: number, z: number, expr: Exp
   out.places.push(person(cam, who, x, 0.42 * (sc / 1.5), z, { side: false, mirror: false }, fo, {}, sc));
 };
 
-/** S7 f585-697: collector reveal - full body at the back of the alley, gliding slowly toward the lens */
+/** S7 f585-697: collector reveal - full body at the back of the alley (COLL_ALLEY 1.2, -50), gliding slowly forward */
 const reveal = (t: number, cam: Info, out: Stage) => {
   const f = Math.round(t * FPS);
-  const z = -53 + Math.min(6, Math.max(0, f - F.reveal[0]) * 0.014);
-  collector(cam, t, out, 0.6, 0, z);
+  const z = -52.5 + Math.min(2.8, Math.max(0, f - F.reveal[0]) * 0.051);
+  collector(cam, t, out, 1.05, 0, z);
 };
 
 /** S8 f698-849: brother breathing forever; the seven empty beds; sister is the eighth */
@@ -396,7 +398,7 @@ const chase = (t: number, cam: Info, out: Stage) => {
   const f = Math.round(t * FPS), u = Math.min(1, Math.max(0, (f - F.chase[0]) / (F.chase[1] - F.chase[0])));
   // nightmare feet stick like wet concrete: ground speed sags in the middle third, the lean does not
   const stick = 1 - 0.45 * Math.sin(Math.PI * Math.min(1, Math.max(0, (u - 0.3) / 0.5)));
-  const z = -50 + 7 * u * stick;
+  const z = -50 + 4.5 * u * stick;
   const ph = (t * 2.7) % 1;
   const fb: FrontOpts = { mode: "run", phase: ph, expr: "determined", facing: 1, tilt: 6, lift: 92, blink: lidAt(t, 51) };
   out.places.push(person(cam, brother(51), 0.4, 0, z, viewOf(cam, 0.4, z, 0, 1), fb, { mode: "march", phase: ph, stomp: 1.2, stride: 1.3 }));
@@ -404,6 +406,8 @@ const chase = (t: number, cam: Info, out: Stage) => {
   const fs: FrontOpts = { mode: "run", phase: (ph + 0.35) % 1, expr: "terrified", facing: 1, tilt: 6.5, lift: 88, blink: lidAt(t, 50) };
   out.places.push(person(cam, sister(50), 0.95, 0, z + 0.5, viewOf(cam, 0.95, z + 0.5, 0, 1), fs, { mode: "march", phase: (ph + 0.35) % 1, stomp: 1.2, stride: 1.3 }, SIS_SCALE));
   blob(out, 0.95, 0, z + 0.5, SIS_SCALE);
+  // "that's him" (S11c, f>=1250): the collector looms far down the alley behind the runners
+  if (f >= 1250) collector(cam, t, out, 2.7, 0, -53.5);
 };
 
 /** S12 f1265-1470: roof dead end at y = 9.8; from f1373 they hold hands; she flips hopeful before "no, we're not" */
@@ -439,8 +443,8 @@ const bedroom14 = (t: number, cam: Info, out: Stage) => {
   }
   if (f >= F.doorBurst) {
     const fo: FrontOpts = { mode: "stand", expr: "hopeful", blink: lidAt(t, 50) };
-    out.places.push(person(cam, sister(50), DOOR[0] + 0.3, 0, DOOR[2], { side: false, mirror: false }, fo, {}, SIS_SCALE));
-    blob(out, DOOR[0] + 0.3, 0, DOOR[2], SIS_SCALE);
+    out.places.push(person(cam, sister(50), DOOR[0], 0, DOOR[2], { side: false, mirror: false }, fo, {}, SIS_SCALE));
+    blob(out, DOOR[0], 0, DOOR[2], SIS_SCALE);
   }
 };
 
@@ -452,13 +456,31 @@ const alone = (t: number, cam: Info, out: Stage) => {
   const fb: FrontOpts = { mode: "march", phase: ph, expr: "determined", facing: 0, blink: lidAt(t, 51), lift: 55 };
   out.places.push(person(cam, brother(51), 0.4, 0, z, viewOf(cam, 0.4, z, 0, -1), fb, { mode: "march", phase: ph, stomp: 0.9, stride: 0.9 }));
   blob(out, 0.4, 0, z);
-  if (f >= F.himFar) collector(cam, t, out, 0, 0, -62);
+  if (f >= F.himFar) collector(cam, t, out, 0.8, 0, -56);
+};
+
+/** S15 f1618-1715: "the trick" - pajama-clad townsfolk keep jumping off the roofs, one after another */
+const trick = (t: number, cam: Info, out: Stage) => {
+  const f = Math.round(t * FPS);
+  if (f < 1618 || f > 1715) return;
+  for (let i = 0; i < 3; i++) {
+    const p = (((f - 1618 - i * 16) / 42) % 1 + 1) % 1;
+    const y = 10.0 - 8.5 * p * p;
+    if (y < 0.3) continue;
+    const v = 5 + (i % 2);
+    const who: Who = { i: 400 + i, o: pajamas(v), okey: `pj${v}` };
+    const fo: FrontOpts = { mode: "fall", expr: i % 2 ? "terrified" : "gasp", blink: 0 };
+    const x = -0.8 + i * 0.9, z = -44.8 - i * 0.7;
+    out.places.push(person(cam, who, x, y, z, { side: false, mirror: false }, fo, {}));
+  }
 };
 
 /** S16 f1814-1957: collector at the market entrance, whispers, then walks to the ledge and steps off (glides down) */
 const entrance = (t: number, cam: Info, out: Stage) => {
   const f = Math.round(t * FPS);
-  const z = -12 + Math.min(5, Math.max(0, f - F.entrance[0]) * 0.035);
+  // glide up the street to the entrance (z ~ -8.3), then walk on to the ledge LEDGE_M (z -5) by f1929
+  const z0 = -10.5 + Math.min(3.5, Math.max(0, f - F.entrance[0]) * 0.022);
+  const z = Math.min(f >= 1914 ? z0 + Math.min(3.3, (f - 1914) * 0.22) : z0, -5);
   let y = 0;
   if (f >= F.stepsOff) { y = -9 * ((f - F.stepsOff) / 27) ** 2; if (y < -8) return; }
   collector(cam, t, out, 0, y, z);
@@ -469,7 +491,7 @@ const watch = (t: number, out: Stage) => {
   const f = Math.round(t * FPS);
   if (f < F.watch) return;
   bed(out, BRO_BED[0], BRO_BED[2], "bedB", { lump: 0, blanket: BROTHER.blanket });
-  out.fx.push({ key: "pwatch", cw: 900, ch: 1500, draw: (p) => fxPocketWatch(p), x: 28.78, y: 0.30, z: 0.50, w: 0.72, h: 1.2, soft: true });
+  out.fx.push({ key: "pwatch", cw: 900, ch: 1500, draw: (p) => fxPocketWatch(p), x: 28.78, y: 0.30, z: 0.50, w: 0.45, h: 0.75, soft: true });
 };
 
 type Info = CamInfo; // short alias used above
@@ -496,7 +518,7 @@ export const stage = (id: number, t: number, _b: unknown, cam: CamInfo): Stage =
     case 12: roof(t, cam, out); break;
     case 13: fallingShot(t, cam, out); break;
     case 14: bedroom14(t, cam, out); break;
-    case 15: alone(t, cam, out); break;
+    case 15: trick(t, cam, out); alone(t, cam, out); break;
     case 16: entrance(t, cam, out); break;
     case 17: watch(t, out); break;
   }

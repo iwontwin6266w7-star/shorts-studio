@@ -26,6 +26,21 @@ jobs:
         run: npm ci || npm install
         working-directory: app
 
+      - name: Render QA stills (24 checkpoints, half-res)
+        run: |
+          mkdir -p out/qa
+          node scripts/bridge-stills.mjs out/qa/ 240,300,450,630,690,750,840,1110,1230,1260,1290,1350,1410,1470,1500,1530,1590,1650,1710,1830,1890,1920,1970,2010 0.5
+        env:
+          CHROME_GL: swangle
+        working-directory: app
+
+      - name: Upload QA stills
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-stills
+          path: app/out/qa/*.jpg
+          if-no-files-found: error
+
       - name: Render video
         run: |
           mkdir -p out
