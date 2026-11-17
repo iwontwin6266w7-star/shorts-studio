@@ -1,0 +1,81 @@
+{
+  "subject": "LeBron James",
+  "images": [
+    {
+      "fact_number": 10,
+      "description": "Image for fact #10",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_10.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 9,
+      "description": "Image for fact #9",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_9.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 8,
+      "description": "Image for fact #8",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_8.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 7,
+      "description": "Image for fact #7",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_7.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 6,
+      "description": "Image for fact #6",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_6.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 5,
+      "description": "Image for fact #5",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_5.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 4,
+      "description": "Image for fact #4",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_4.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 3,
+      "description": "Image for fact #3",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_3.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 2,
+      "description": "Image for fact #2",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_2.jpg",
+      "license": ""
+    },
+    {
+      "fact_number": 1,
+      "description": "Image for fact #1",
+      "source_url": "",
+      "local_path": "public/images/lebron_james_fact_1.jpg",
+      "license": ""
+    }
+  ],
+  "notes": [
+    "Use Wikimedia Commons for public domain images",
+    "Ensure all images are 1080x1920 or can be cropped",
+    "Maintain consistent visual style",
+    "Avoid copyrighted material unless fair use"
+  ]
+}

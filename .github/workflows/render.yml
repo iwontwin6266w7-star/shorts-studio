@@ -1,12 +1,24 @@
-name: Render NightMarketShort
+# Why Guy-Style Listicle Short Renderer
+# Format: "10 Weird Things About [NAME]..."
+# Style: Documentary slideshow with Ken Burns effect, archival photos
+name: Render Why Guy Short
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      subject:
+        description: 'Subject name (e.g., LeBron_James, Einstein, Tesla)'
+        required: true
+        default: 'LeBron_James'
+      scale:
+        description: 'Render scale (1.0 for 1080p, 1.3333 for 2K)'
+        required: true
+        default: '1.0'
 
 concurrency:
-  group: render-main
+  group: render-${{ github.event.inputs.subject || 'whyguy' }}
   cancel-in-progress: true
 
 jobs:
@@ -30,30 +42,44 @@ jobs:
         run: npm ci || npm install
         working-directory: app
 
-      - name: Render QA stills (24 checkpoints, half-res)
-        run: |
-          mkdir -p out/qa
-          node scripts/bridge-stills.mjs out/qa/ 240,300,450,630,690,750,840,1110,1230,1260,1290,1350,1410,1470,1500,1530,1590,1650,1710,1830,1890,1920,1970,2010 0.5
-        env:
-          CHROME_GL: swangle
-          BRIDGE_COMP: NightMarketShort
-        working-directory: app
-
-      - name: Upload QA stills
-        uses: actions/upload-artifact@v4
-        with:
-          name: qa-stills
-          path: app/out/qa/*.jpg
-          if-no-files-found: error
-
-      - name: Render video
+      - name: Render video (1080x1920 vertical @ 30fps, ~60s)
         run: |
           mkdir -p out
-          npx remotion render NightMarketShort out/nightmarket.mp4 --gl=swangle --timeout=600000 --concurrency=2 --chrome-flag="--no-sandbox" --log=error
+          npx remotion render WhyGuyShort out/video.mp4 \
+            --gl=swangle \
+            --timeout=600000 \
+            --concurrency=2 \
+            --scale=${{ github.event.inputs.scale || '1.0' }} \
+            --codec=h264 \
+            --crf=16 \
+            --chrome-flag="--no-sandbox" \
+            --log=error
         working-directory: app
 
-      - name: Upload artifact
+      - name: Verify output specs
+        run: |
+          echo "=== Output Verification ==="
+          ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate -of csv=p=0 out/video.mp4
+          echo "=== Loudness check (target: -14 LUFS) ==="
+          ffmpeg -i out/video.mp4 -af ebur128=peak=true -f null - 2>&1 | grep -E "I:|LRA:|Peak:"
+        working-directory: app
+        continue-on-error: true
+
+      - name: Upload final artifact
         uses: actions/upload-artifact@v4
         with:
-          name: nightmarket-video
-          path: app/out/nightmarket.mp4
+          name: whyguy-${{ github.event.inputs.subject || 'lebron' }}-video
+          path: app/out/video.mp4
+          if-no-files-found: error
+
+      - name: Create release notes
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "## Why Guy Short Render Complete" > release_notes.md
+          echo "- Subject: ${{ github.event.inputs.subject || 'LeBron_James' }}" >> release_notes.md
+          echo "- Scale: ${{ github.event.inputs.scale || '1.0' }}" >> release_notes.md
+          echo "- Resolution: $(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 out/video.mp4)" >> release_notes.md
+          echo "- Duration: ~60 seconds" >> release_notes.md
+          echo "- Style: Archival photos + Ken Burns + narration" >> release_notes.md
+          cat release_notes.md
+        working-directory: app
