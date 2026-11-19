@@ -1,3 +1,6 @@
 node_modules/
 out/
 .env*
+
+# persistent local browser profile (never commit)
+.flow-browser-profile/
